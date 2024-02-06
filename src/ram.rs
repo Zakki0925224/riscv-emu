@@ -4,16 +4,18 @@ pub struct Ram {
 }
 
 impl Ram {
-    pub fn new(size: usize) -> Self {
-        Self { ram: vec![0; size] }
+    pub fn new(size: u64) -> Self {
+        Self {
+            ram: vec![0; size as usize],
+        }
     }
 
-    pub fn read8(&self, addr: usize) -> u8 {
+    pub fn read8(&self, addr: u64) -> u8 {
         let abs_addr = self.abs_addr(addr);
         self.ram[abs_addr]
     }
 
-    pub fn write8(&mut self, addr: usize, data: u8) {
+    pub fn write8(&mut self, addr: u64, data: u8) {
         let abs_addr = self.abs_addr(addr);
         self.ram[abs_addr] = data;
     }
@@ -22,7 +24,7 @@ impl Ram {
         self.ram.len()
     }
 
-    fn abs_addr(&self, addr: usize) -> usize {
-        addr % self.size()
+    fn abs_addr(&self, addr: u64) -> usize {
+        addr as usize % self.size()
     }
 }

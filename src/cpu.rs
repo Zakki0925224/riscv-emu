@@ -1,18 +1,33 @@
-type RegisterType = u32;
+use crate::registers::{GeneralPurposeRegister, ProgramCounter};
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum CpuState {
+    Reset,
+    Fetch,
+    Decode,
+    Execution,
+    WriteBack,
+}
 
 #[derive(Debug)]
 pub struct Cpu {
     // general purpose registers
-    x_regs: [RegisterType; 32],
+    pub x_regs: [GeneralPurposeRegister; 32],
     // program counter
-    pc: RegisterType,
+    pub pc: ProgramCounter,
+    pub state: CpuState,
+}
+
+impl Default for Cpu {
+    fn default() -> Self {
+        Self {
+            x_regs: [GeneralPurposeRegister::default(); 32],
+            pc: ProgramCounter::default(),
+            state: CpuState::Reset,
+        }
+    }
 }
 
 impl Cpu {
-    pub fn new() -> Self {
-        Self {
-            x_regs: [0; 32],
-            pc: 0,
-        }
-    }
+    pub fn decode(&self) {}
 }
